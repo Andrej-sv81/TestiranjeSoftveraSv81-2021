@@ -1,5 +1,10 @@
 package com.ftn.ts.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class UserODDTO {
     private String email;
     private String password;

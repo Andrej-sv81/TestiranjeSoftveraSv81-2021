@@ -1,5 +1,6 @@
 package com.ftn.ts.service;
 
+import com.ftn.ts.dto.UserDTOMapper;
 import com.ftn.ts.dto.UserODDTO;
 import com.ftn.ts.model.UserOD;
 import com.ftn.ts.repository.UserODRepository;
@@ -25,8 +26,10 @@ public class UserODService implements UserDetailsService {
         return null;
     }
 
-    public Object newUser(UserODDTO dto) {
-        return null;
+    public UserODDTO newUser(UserODDTO dto) {
+        var user = UserDTOMapper.dtoToUser(dto);
+        userODRepository.save(user);
+        return dto;
     }
 
     public void activateUser(String newUserMail) {
