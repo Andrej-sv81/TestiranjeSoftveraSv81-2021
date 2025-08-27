@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,6 +31,10 @@ public class UserOD implements UserDetails {
     @Column(length=1000000)
     @Nullable
     private byte[] picture;
+    private boolean activated;
+    @Nullable
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp created;
     private String address;
     private String phone;
 

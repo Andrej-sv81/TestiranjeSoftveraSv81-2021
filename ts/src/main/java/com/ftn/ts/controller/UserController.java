@@ -7,9 +7,11 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.AccountExpiredException;
 import java.security.Principal;
 @RestController
 @RequestMapping("/api/user")
@@ -18,14 +20,14 @@ public class UserController {
     @Autowired
     private UserODService service;
 
-//    @GetMapping("/login")
-//    public ResponseEntity<LoginResponseDTO> login(Principal principal) {
-//        UserOD user = service.getUserByEmail(principal.getName());
-//        if (user == null) {
-//            throw new EntityNotFoundException("User does not exist!");
-//        }
-//        return ResponseEntity.ok(new LoginResponseDTO(user.getEmail(), user.getType().name()));
-//    }
+    @GetMapping("/login")
+    public ResponseEntity<String> login(Principal principal) {
+        UserOD user = service.getUserByEmail(principal.getName());
+        if (user == null) {
+            throw new EntityNotFoundException("User does not exist!");
+        }
+        return ResponseEntity.ok(user.getEmail());
+    }
 
     @PostMapping("/registration/")
     public ResponseEntity<UserODDTO> newUser(@RequestBody UserODDTO dto) {
@@ -47,9 +49,13 @@ public class UserController {
             var message = "Account with email " + newUserMail + " activated. Proceed to our page and login.";
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
-        catch (Exception e) {
-            var message = "Email not found. Try registration again.";
+        catch (UsernameNotFoundException e) {
+            var message = "Email not found. Try to register again.";
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+        catch (AccountExpiredException e) {
+            var message = "Activation expired. Try to register again.";
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
         }
     }
 
