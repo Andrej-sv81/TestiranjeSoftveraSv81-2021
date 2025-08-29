@@ -1,51 +1,33 @@
 package com.ftn.ts.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
-@ToString
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@Entity
-@Table(name="od_users")
-public class UserOD implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(unique=true)
-    private String email;
-    private String password;
-    private String name;
+@Table(name = "user_od")
+public class UserOD extends BaseUser{
     private String surname;
-    @Lob
-    @Column(length=1000000)
-    @Nullable
-    private byte[] picture;
     private boolean activated;
-    @Nullable
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp created;
-    private String address;
-    private String phone;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Picture picture;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_USER_OD"));
     }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
 }
