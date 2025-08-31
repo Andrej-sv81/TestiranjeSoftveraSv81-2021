@@ -15,8 +15,11 @@ public abstract class BaseUser implements UserDetails {
     private String email;
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String address;
+    @Column(nullable = false)
     private String phone;
 
     @Override
