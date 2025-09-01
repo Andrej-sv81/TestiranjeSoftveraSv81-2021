@@ -1,9 +1,11 @@
 package com.ftn.ts.controller;
 
+import com.ftn.ts.dto.LoginResponseDTO;
 import com.ftn.ts.dto.UserODDTO;
 import com.ftn.ts.dto.UserPUPDTO;
 import com.ftn.ts.exceptions.ActivationExpiredException;
 import com.ftn.ts.exceptions.NotActivatedException;
+import com.ftn.ts.model.BaseUser;
 import com.ftn.ts.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
@@ -27,9 +29,9 @@ public class UserController {
     private UserService service;
 
     @GetMapping("/login")
-    public ResponseEntity<String> login(Principal principal) throws NotActivatedException {
+    public ResponseEntity<LoginResponseDTO> login(Principal principal) throws NotActivatedException {
         var user = service.login(principal.getName());
-        return ResponseEntity.ok("Login successful");
+        return ResponseEntity.ok(new LoginResponseDTO(user.get().getEmail(), user.get().getPassword()));
     }
 
     @PostMapping("/registration/")

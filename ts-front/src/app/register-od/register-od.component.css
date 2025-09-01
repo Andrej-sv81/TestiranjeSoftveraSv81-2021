@@ -1,0 +1,57 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.title-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+form {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+label {
+    margin-bottom: 10px;
+}
+
+input {
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #7b7b7b;
+}
+
+input.ng-invalid.ng-touched {
+    border: 2px solid #dc9393;
+    background-color: #f3baba;
+}
+
+button {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #7b7b7b;
+    background-color: #dc9393;
+    color: #000;
+}
+
+button:hover {
+    background-color: #f3baba;
+}
+
+button:disabled {
+    background-color: #fdfdfd;
+    color: #7b7b7b;
+}
+
