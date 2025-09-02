@@ -1,21 +1,63 @@
 <div class="login-container">
     <div class="title-div">
         <h2>Register OD</h2>
-        <button style="margin-left: 10px;"(click)="click()">Placeholder</button>
+        <button style="margin-left: 10px;" (click)="click()">Placeholder</button>
     </div>
     <form [formGroup]="registerForm" (ngSubmit)="registerOD()">
-        <label for="email">Email: </label>
+        <div class="title-div">
+            <label for="email">Email: </label>
+            <label class="error"
+                *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+                Email needs to be valid.
+            </label>
+        </div>
         <input id="email" type="text" formControlName="email">
-        <label for="password">Password: </label>
+
+        <div class="title-div">
+            <label for="password">Password: </label>
+            <label class="error"
+                *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+                Password is required and must be at least 6 characters.
+            </label>
+        </div>
         <input id="password" type="password" formControlName="password">
-        <label for="name">Name: </label>
+
+        <div class="title-div">
+            <label for="name">Name: </label>
+            <label class="error"
+                *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid">
+                Name is required and must be at most 50 characters.
+            </label>
+        </div>
         <input id="name" type="text" formControlName="name">
-        <label for="surname">Surname: </label>
+
+        <div class="title-div">
+            <label for="surname">Surname: </label>
+            <label class="error"
+                *ngIf="registerForm.get('surname')?.touched && registerForm.get('surname')?.invalid">
+                Surname is required and must be at most 50 characters.
+            </label>
+        </div>
         <input id="surname" type="text" formControlName="surname">
-        <label for="address">Address: </label>
+
+        <div class="title-div">
+            <label for="address">Address: </label>
+            <label class="error"
+                *ngIf="registerForm.get('address')?.touched && registerForm.get('address')?.invalid">
+                Address is required and must be at most 100 characters.
+            </label>
+        </div>
         <input id="address" type="text" formControlName="address">
-        <label for="phone">Phone: </label>
+
+        <div class="title-div">
+            <label for="phone">Phone: </label>
+            <label class="error"
+                *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.invalid">
+                Phone is required and must be valid (6-15 digits, may include +,-).
+            </label>
+        </div>
         <input id="phone" type="text" formControlName="phone">
+
         <button type="submit" [disabled]="!registerForm.valid">Register</button>
     </form>
 </div>

@@ -1,1 +1,63 @@
-<p>register-pup works!</p>
+<div class="login-container">
+    <div class="title-div">
+        <h2>Register PUP</h2>
+        <button style="margin-left: 10px;" (click)="click()">Placeholder</button>
+    </div>
+    <form [formGroup]="registerForm" (ngSubmit)="registerOD()">
+        <div class="title-div">
+            <label for="email">Email: </label>
+            <label class="error"
+                *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+                Email needs to be valid.
+            </label>
+        </div>
+        <input id="email" type="text" formControlName="email">
+
+        <div class="title-div">
+            <label for="password">Password: </label>
+            <label class="error"
+                *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+                Password is required and must be at least 6 characters.
+            </label>
+        </div>
+        <input id="password" type="password" formControlName="password">
+
+        <div class="title-div">
+            <label for="name">Name: </label>
+            <label class="error"
+                *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid">
+                Name is required and must be at most 50 characters.
+            </label>
+        </div>
+        <input id="name" type="text" formControlName="name">
+
+        <div class="title-div">
+            <label for="address">Address: </label>
+            <label class="error"
+                *ngIf="registerForm.get('address')?.touched && registerForm.get('address')?.invalid">
+                Address is required and must be at most 100 characters.
+            </label>
+        </div>
+        <input id="address" type="text" formControlName="address">
+
+        <div class="title-div">
+            <label for="phone">Phone: </label>
+            <label class="error"
+                *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.invalid">
+                Phone is required and must be valid (6-15 digits, may include +,-).
+            </label>
+        </div>
+        <input id="phone" type="text" formControlName="phone">
+
+        <div class="title-div">
+            <label for="description">Description: </label>
+            <label class="error"
+                *ngIf="registerForm.get('description')?.touched && registerForm.get('description')?.invalid">
+                Description is required and must be at most 512 characters.
+            </label>
+        </div>
+        <textarea id="description" type="text" formControlName="description"></textarea>
+
+        <button type="submit" [disabled]="!registerForm.valid">Register</button>
+    </form>
+</div>

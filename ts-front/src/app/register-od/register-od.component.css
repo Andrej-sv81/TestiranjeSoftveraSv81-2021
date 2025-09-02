@@ -13,11 +13,18 @@
     justify-content: space-between;
 }
 
+.error {
+    color: red;
+    font-weight: bold;
+    margin-left: 10px;
+    font-size: 12px;
+}
+
 form {
     margin-top: 10px;
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 400px;
 }
 
 label {

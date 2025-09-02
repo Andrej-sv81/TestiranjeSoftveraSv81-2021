@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserOD } from './models/user-od';
 import { Observable } from 'rxjs/internal/Observable';
+import { UserPUP } from './models/user-pup';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +15,9 @@ export class RegistrationService {
 
   registerOD(user: UserOD): Observable<any> {
     return this.http.post(`${this.baseUrl}/registration/`, user, {responseType: 'text'});
+  }
+
+  registerPUP(user: UserPUP): Observable<any> {
+    return this.http.post(`${this.baseUrl}/registration/pup`, user, {responseType: 'text'});
   }
 }

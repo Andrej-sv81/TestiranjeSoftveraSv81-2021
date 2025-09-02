@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { UserOD } from '../models/user-od';
 import { RegistrationService } from '../registration.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register-od',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register-od.component.html',
   styleUrl: './register-od.component.css'
 })
