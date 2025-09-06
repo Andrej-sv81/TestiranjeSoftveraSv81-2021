@@ -1,1 +1,9 @@
-<p>picture-od works!</p>
+<div class="picture-container">
+    <h2>Profile Picture</h2>
+    <img [src]="imageUrl" alt="Profile Picture"/>
+    <br/>
+    <input type="file" id="fileInput" (change)="onFileSelected($event)" accept=".png, .jpeg, .jpg" />
+    <label class="error" *ngIf="error">Error uploading picture. Please try again.</label>
+    <label for="fileInput" class="custom-file-btn">Choose Profile Picture</label>
+</div>
+

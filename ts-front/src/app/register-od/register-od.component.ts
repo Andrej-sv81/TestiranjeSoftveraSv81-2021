@@ -42,8 +42,7 @@ export class RegisterODComponent {
 
     this.service.registerOD(user).subscribe({
       next: (response: any) => {
-        //TODO: navigate to picture upload!
-        this.router.navigate(['/login']);
+        this.router.navigate(['/picture-od'], {queryParams: {email: user.email}});
       },
       error: (err: any) => {
         this.errorMessage = err.error || 'Registration failed!';

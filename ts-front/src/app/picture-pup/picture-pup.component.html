@@ -1,1 +1,10 @@
-<p>picture-pup works!</p>
+<div class="picture-container">
+  <h2>Upload up to 5 Pictures</h2>
+  <div *ngIf="imageUrls.length > 0" class="image-wrapp">
+      <img *ngFor="let url of imageUrls" [src]="url" alt="Preview" style="max-width: 150px; margin: 5px;"/>
+  </div>
+  <input type="file" id="fileInput" (change)="onFilesSelected($event)" accept=".png, .jpeg, .jpg" multiple />
+  <label for="fileInput" class="custom-file-btn">Choose Pictures</label>
+  <button (click)="uploadPictures()" [disabled]="selectedFiles.length === 0">Upload</button>
+  <label class="error" *ngIf="error">Error uploading pictures. Please try again.</label>
+</div>

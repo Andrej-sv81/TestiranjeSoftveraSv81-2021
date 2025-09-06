@@ -42,8 +42,7 @@ export class RegisterPUPComponent {
 
     this.service.registerPUP(user).subscribe({
       next: (response: any) => {
-        //TODO: navigate to picture upload!
-        this.router.navigate(['/login']);
+        this.router.navigate(['/picture-pup'], { queryParams: { email: user.email } });
       },
       error: (err: any) => {
         this.errorMessage = err.error || 'Registration failed!';

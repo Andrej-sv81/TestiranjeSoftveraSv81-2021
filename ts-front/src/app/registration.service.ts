@@ -20,4 +20,12 @@ export class RegistrationService {
   registerPUP(user: UserPUP): Observable<any> {
     return this.http.post(`${this.baseUrl}/registration/pup`, user, {responseType: 'text'});
   }
+
+  sendPictureOd(formData: FormData, email: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/registration/picture/${email}`, formData, {responseType: 'text'});
+  }
+
+  sendPicturePup(formData: FormData, email: string) {
+    return this.http.post(`${this.baseUrl}/registration/picture/pup/${email}`, formData, { responseType: 'text' });
+  }
 }
