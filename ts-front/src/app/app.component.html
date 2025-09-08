@@ -1,6 +1,7 @@
 <nav class="navbar">
-  <a routerLink="/register-od" routerLinkActive="active">Registracija OD</a>
-  <a routerLink="/login" routerLinkActive="active">Login</a>
-  <a routerLink="/main" routerLinkActive="active">Glavna stranica</a>
+  <a routerLink="/register-od" routerLinkActive="active">Register OD</a>
+  <a *ngIf="!authService.isLoggedIn()" routerLink="/login" routerLinkActive="active">Login</a>
+  <button *ngIf="authService.isLoggedIn()" (click)="logout()" class="logout-btn">Logout</button>
+  <a routerLink="/main" routerLinkActive="active">Create event</a>
 </nav>
 <router-outlet>

@@ -1,37 +1,86 @@
 <div class="form-container">
-  <h2>Kreiraj događaj</h2>
+  <h2>Create an event</h2>
   <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
-    <label>Naslov:</label>
-    <input type="text" formControlName="name" required />
+    <div class="title-div">
+      <label for="name">Title:</label>
+      <label class="error"
+        *ngIf="eventForm.get('name')?.touched && eventForm.get('name')?.invalid">
+        <span *ngIf="eventForm.get('name')?.errors?.['required']">Event name is required.</span>
+        <span *ngIf="eventForm.get('name')?.errors?.['maxlength']">Max 150 characters.</span>
+      </label>
+    </div>
+    <input id="name" type="text" formControlName="name" required />
 
-    <label>Opis:</label>
-    <textarea formControlName="description" required></textarea>
+    <div class="title-div">
+      <label for="description">Description:</label>
+      <label class="error"
+        *ngIf="eventForm.get('description')?.touched && eventForm.get('description')?.invalid">
+        <span *ngIf="eventForm.get('description')?.errors?.['required']">Description is required.</span>
+        <span *ngIf="eventForm.get('description')?.errors?.['maxlength']">Max 2000 characters.</span>
+      </label>
+    </div>
+    <textarea id="description" formControlName="description" required></textarea>
 
-    <label>Maksimalan broj učesnika:</label>
-    <input type="number" formControlName="maxParticipants" min="1" required />
+    <div class="title-div">
+      <label for="maxParticipants">Maximum number of participants:</label>
+      <label class="error"
+        *ngIf="eventForm.get('maxParticipants')?.touched && eventForm.get('maxParticipants')?.invalid">
+        <span *ngIf="eventForm.get('maxParticipants')?.errors?.['required']">Max participants is required.</span>
+        <span *ngIf="eventForm.get('maxParticipants')?.errors?.['min']">Minimum is 1.</span>
+        <span *ngIf="eventForm.get('maxParticipants')?.errors?.['max']">Maximum is 10,000.</span>
+      </label>
+    </div>
+    <input id="maxParticipants" type="number" formControlName="maxParticipants" min="1" required />
 
-    <label>Privatnost:</label>
-    <select formControlName="privacyType" required>
-      <option value="">-- odaberi --</option>
-      <option value="OPEN">Javni</option>
-      <option value="CLOSED">Privatni</option>
+    <div class="title-div">
+      <label for="privacyType">Privacy:</label>
+      <label class="error"
+        *ngIf="eventForm.get('privacyType')?.touched && eventForm.get('privacyType')?.invalid">
+        <span *ngIf="eventForm.get('privacyType')?.errors?.['required']">Privacy type is required.</span>
+        <span *ngIf="eventForm.get('privacyType')?.errors?.['pattern']">Must be OPEN or CLOSED.</span>
+      </label>
+    </div>
+    <select id="privacyType" formControlName="privacyType" required>
+      <option value="">-pick the type-</option>
+      <option value="OPEN">OPEN</option>
+      <option value="CLOSED">CLOSED</option>
     </select>
 
-    <label>Lokacija:</label>
-    <input type="text" formControlName="location" required />
+    <div class="title-div">
+      <label for="location">Location:</label>
+      <label class="error"
+        *ngIf="eventForm.get('location')?.touched && eventForm.get('location')?.invalid">
+        <span *ngIf="eventForm.get('location')?.errors?.['required']">Location is required.</span>
+        <span *ngIf="eventForm.get('location')?.errors?.['maxlength']">Max 255 characters.</span>
+      </label>
+    </div>
+    <input id="location" type="text" formControlName="location" required />
 
-    <label>Datum događaja:</label>
-    <input type="datetime-local" formControlName="eventDate" />
+    <div class="title-div">
+      <label for="eventDate">Event date:</label>
+      <label class="error"
+        *ngIf="eventForm.get('eventDate')?.touched && eventForm.get('eventDate')?.invalid">
+        <span *ngIf="eventForm.get('eventDate')?.errors?.['required']">Event date is required.</span>
+        <span *ngIf="eventForm.get('eventDate')?.errors?.['pattern']">Format: yyyy-MM-dd or yyyy-MM-ddTHH:mm</span>
+      </label>
+    </div>
+    <input id="eventDate" type="datetime-local" formControlName="eventDate" />
 
-    <label>Tip događaja:</label>
-    <select formControlName="eventTypeId">
-      <option value="">-- odaberi tip --</option>
-      <option value="1">Venčanje</option>
-      <option value="2">Rođendan</option>
-      <option value="3">Konferencija</option>
-      <option value="4">Team building</option>
+    <div class="title-div">
+      <label for="eventTypeId">Event type:</label>
+      <label class="error"
+        *ngIf="eventForm.get('eventTypeId')?.touched && eventForm.get('eventTypeId')?.invalid">
+        <span *ngIf="eventForm.get('eventTypeId')?.errors?.['required']">Event type is required.</span>
+      </label>
+    </div>
+    <select id="eventTypeId" formControlName="eventTypeId">
+      <option value="">-pick the type-</option>
+      <option value="1">WEDDING</option>
+      <option value="2">BIRTHDAY</option>
+      <option value="3">CONFERENCE</option>
+      <option value="4">TEAM BUILDING</option>
     </select>
 
-    <button type="submit" [disabled]="!eventForm.valid">Kreiraj</button>
+    <button type="submit" [disabled]="!eventForm.valid">Create</button>
   </form>
 </div>

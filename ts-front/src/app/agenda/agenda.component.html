@@ -1,25 +1,60 @@
 <div class="form-container">
-  <h2>Dodaj agendu za događaj</h2>
+  <h2>Add event agenda</h2>
   <form [formGroup]="agendaForm" (ngSubmit)="addAgendaItem()">
-    <label>Naslov:</label>
-    <input type="text" formControlName="title" required />
+    <div class="title-div">
+      <label for="title">Title:</label>
+      <label class="error"
+        *ngIf="agendaForm.get('title')?.touched && agendaForm.get('title')?.invalid">
+        <span *ngIf="agendaForm.get('title')?.errors?.['required']">Title is required.</span>
+        <span *ngIf="agendaForm.get('title')?.errors?.['maxlength']">Max 100 characters.</span>
+      </label>
+    </div>
+    <input id="title" type="text" formControlName="title" required />
 
-    <label>Opis:</label>
-    <input type="text" formControlName="description" required />
+    <div class="title-div">
+      <label for="description">Description:</label>
+      <label class="error"
+        *ngIf="agendaForm.get('description')?.touched && agendaForm.get('description')?.invalid">
+        <span *ngIf="agendaForm.get('description')?.errors?.['required']">Description is required.</span>
+        <span *ngIf="agendaForm.get('description')?.errors?.['maxlength']">Max 1000 characters.</span>
+      </label>
+    </div>
+    <input id="description" type="text" formControlName="description" required />
 
-    <label>Početak:</label>
-    <input type="datetime-local" formControlName="startTime" required />
+    <div class="title-div">
+      <label for="startTime">Start time:</label>
+      <label class="error"
+        *ngIf="agendaForm.get('startTime')?.touched && agendaForm.get('startTime')?.invalid">
+        <span *ngIf="agendaForm.get('startTime')?.errors?.['required']">Start time is required.</span>
+        <span *ngIf="agendaForm.get('startTime')?.errors?.['pattern']">Format: yyyy-MM-dd or yyyy-MM-ddTHH:mm</span>
+      </label>
+    </div>
+    <input id="startTime" type="datetime-local" formControlName="startTime" required />
 
-    <label>Kraj:</label>
-    <input type="datetime-local" formControlName="endTime" required />
+    <div class="title-div">
+      <label for="endTime">End time:</label>
+      <label class="error"
+        *ngIf="agendaForm.get('endTime')?.touched && agendaForm.get('endTime')?.invalid">
+        <span *ngIf="agendaForm.get('endTime')?.errors?.['required']">End time is required.</span>
+        <span *ngIf="agendaForm.get('endTime')?.errors?.['pattern']">Format: yyyy-MM-dd or yyyy-MM-ddTHH:mm</span>
+      </label>
+    </div>
+    <input id="endTime" type="datetime-local" formControlName="endTime" required />
 
-    <label>Lokacija:</label>
-    <input type="text" formControlName="location" />
+    <div class="title-div">
+      <label for="location">Location:</label>
+      <label class="error"
+        *ngIf="agendaForm.get('location')?.touched && agendaForm.get('location')?.invalid">
+        <span *ngIf="agendaForm.get('location')?.errors?.['required']">Location is required.</span>
+        <span *ngIf="agendaForm.get('location')?.errors?.['maxlength']">Max 255 characters.</span>
+      </label>
+    </div>
+    <input id="location" type="text" formControlName="location" required />
 
     <button type="submit" [disabled]="!agendaForm.valid">Dodaj</button>
   </form>
 
-  <h3>Postojeće stavke agende:</h3>
+  <h3>Agenda list:</h3>
   <ul>
     <li *ngFor="let item of agendaList">
       {{ item.title }} - {{ item.description }} ({{ item.startTime }} - {{ item.endTime }}) {{ item.location ? ' @ ' + item.location : '' }}

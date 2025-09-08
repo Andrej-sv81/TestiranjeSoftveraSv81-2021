@@ -6,6 +6,7 @@ import { RegisterPUPComponent } from './register-pup/register-pup.component';
 import { PictureODComponent } from './picture-od/picture-od.component';
 import { PicturePUPComponent } from './picture-pup/picture-pup.component';
 import { AgendaComponent } from './agenda/agenda.component';
+import { authGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'register-od', pathMatch: 'full'},
@@ -14,6 +15,6 @@ export const routes: Routes = [
     {path: "register-pup", component: RegisterPUPComponent},
     {path: "picture-od", component: PictureODComponent},
     {path: "picture-pup", component: PicturePUPComponent},
-    {path: 'main', component: MainComponent},
-    {path: 'agenda', component: AgendaComponent}
+    {path: 'main', component: MainComponent, canActivate: [authGuard]},
+    {path: 'agenda', component: AgendaComponent , canActivate: [authGuard]}
 ];

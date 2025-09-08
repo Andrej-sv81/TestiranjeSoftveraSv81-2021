@@ -23,3 +23,19 @@
   color: #333;
   cursor: pointer;
 }
+
+.logout-btn {
+  padding: 8px 16px;
+  background: #dc9393;
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.logout-btn:hover {
+  background: #f3baba;
+  color: #333;
+}
