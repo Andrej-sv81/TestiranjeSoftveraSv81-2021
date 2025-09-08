@@ -6,5 +6,6 @@
         <label for="password">Password: </label>
         <input id="password" type="password" formControlName="password">
         <button type="submit" [disabled]="!loginForm.valid">Login</button>
+        <div *ngIf="errorMessage" class="error" style="margin-top:10px;">{{ errorMessage }}</div>
     </form>
 </div>

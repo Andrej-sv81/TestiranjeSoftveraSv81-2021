@@ -1,0 +1,28 @@
+<div class="form-container">
+  <h2>Dodaj agendu za događaj</h2>
+  <form [formGroup]="agendaForm" (ngSubmit)="addAgendaItem()">
+    <label>Naslov:</label>
+    <input type="text" formControlName="title" required />
+
+    <label>Opis:</label>
+    <input type="text" formControlName="description" required />
+
+    <label>Početak:</label>
+    <input type="datetime-local" formControlName="startTime" required />
+
+    <label>Kraj:</label>
+    <input type="datetime-local" formControlName="endTime" required />
+
+    <label>Lokacija:</label>
+    <input type="text" formControlName="location" />
+
+    <button type="submit" [disabled]="!agendaForm.valid">Dodaj</button>
+  </form>
+
+  <h3>Postojeće stavke agende:</h3>
+  <ul>
+    <li *ngFor="let item of agendaList">
+      {{ item.title }} - {{ item.description }} ({{ item.startTime }} - {{ item.endTime }}) {{ item.location ? ' @ ' + item.location : '' }}
+    </li>
+  </ul>
+</div>

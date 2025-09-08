@@ -1,1 +1,37 @@
-<p>main works!</p>
+<div class="form-container">
+  <h2>Kreiraj događaj</h2>
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+    <label>Naslov:</label>
+    <input type="text" formControlName="name" required />
+
+    <label>Opis:</label>
+    <textarea formControlName="description" required></textarea>
+
+    <label>Maksimalan broj učesnika:</label>
+    <input type="number" formControlName="maxParticipants" min="1" required />
+
+    <label>Privatnost:</label>
+    <select formControlName="privacyType" required>
+      <option value="">-- odaberi --</option>
+      <option value="OPEN">Javni</option>
+      <option value="CLOSED">Privatni</option>
+    </select>
+
+    <label>Lokacija:</label>
+    <input type="text" formControlName="location" required />
+
+    <label>Datum događaja:</label>
+    <input type="datetime-local" formControlName="eventDate" />
+
+    <label>Tip događaja:</label>
+    <select formControlName="eventTypeId">
+      <option value="">-- odaberi tip --</option>
+      <option value="1">Venčanje</option>
+      <option value="2">Rođendan</option>
+      <option value="3">Konferencija</option>
+      <option value="4">Team building</option>
+    </select>
+
+    <button type="submit" [disabled]="!eventForm.valid">Kreiraj</button>
+  </form>
+</div>

@@ -50,5 +50,7 @@ export class RegisterPUPComponent {
     });
   }
 
-  click() {}
+  click() {
+    this.router.navigate(['/register-od']);
+  }
 }

@@ -36,11 +36,14 @@ export class PictureODComponent {
       reader.readAsDataURL(this.selectedFile);
 
       const formData = new FormData();
-      formData.append('images', this.selectedFile);
+      formData.append('image', this.selectedFile);
+      
       this.service.sendPictureOd(formData, this.email!).subscribe({
         next: (response: any) => {
           this.error = false;
-          this.router.navigate(['/login']);
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 2000); // 1 second delay
         },
         error: (err: any) => {
           this.error = true;
