@@ -11,36 +11,44 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(email: string, password: string): Observable<any> {
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined' && !!window.sessionStorage;
+  }
 
+  login(email: string, password: string): Observable<any> {
     const authHeader = 'Basic ' + btoa(`${email}:${password}`);
     const headers = new HttpHeaders({ Authorization: authHeader });
 
     return this.http.get<any>(`${this.baseUrl}/login`, { headers })
-    .pipe(
-      tap(user => {
-        sessionStorage.setItem('user', JSON.stringify(user));
-        sessionStorage.setItem('authToken', authHeader);
-      })
-    );
+      .pipe(
+        tap(user => {
+          if (this.isBrowser()) {
+            sessionStorage.setItem('user', JSON.stringify(user));
+            sessionStorage.setItem('authToken', authHeader);
+          }
+        })
+      );
   }
 
   logout(): void {
-    sessionStorage.removeItem('user');
-    sessionStorage.removeItem('authToken');
+    if (this.isBrowser()) {
+      sessionStorage.removeItem('user');
+      sessionStorage.removeItem('authToken');
+    }
     this.router.navigate(['/login']);
   }
 
   getUser(): any {
+    if (!this.isBrowser()) return null;
     const user = sessionStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
 
   isLoggedIn(): boolean {
-    return !!sessionStorage.getItem('authToken');
+    return this.isBrowser() && !!sessionStorage.getItem('authToken');
   }
 
   getAuthToken(): string {
-    return sessionStorage.getItem('authToken') || '';
+    return this.isBrowser() ? (sessionStorage.getItem('authToken') || '') : '';
   }
 }
