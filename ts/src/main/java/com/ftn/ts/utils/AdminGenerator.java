@@ -47,7 +47,8 @@ public class AdminGenerator {
 
     public static String getPasswordFromFile() throws FileNotFoundException {
         File file = new File(passwordFilePath);
-        Scanner sc = new Scanner(file);
-        return sc.nextLine();
+        try (Scanner sc = new Scanner(file)) {
+            return sc.nextLine();
+        }
     }
 }

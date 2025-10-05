@@ -5,7 +5,6 @@ import com.ftn.ts.dto.UserODDTO;
 import com.ftn.ts.dto.UserPUPDTO;
 import com.ftn.ts.exceptions.ActivationExpiredException;
 import com.ftn.ts.exceptions.NotActivatedException;
-import com.ftn.ts.model.BaseUser;
 import com.ftn.ts.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
