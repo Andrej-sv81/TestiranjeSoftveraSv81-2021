@@ -39,7 +39,7 @@ public class EventService {
         if(event == null){
             throw new RuntimeException("Event mapping failed");
         }
-        
+
         Event saved = eventRepository.save(event);
         return saved;
     }
@@ -49,6 +49,10 @@ public class EventService {
                 .orElseThrow(() -> new RuntimeException("Event not found"));
 
         EventAgendaItem item = EventMapper.toAgendaEntity(dto, event);
+        if(item == null){
+            throw new RuntimeException("Agenda item mapping failed");
+        }
+        
         EventAgendaItem saved = agendaRepository.save(item);
         return saved;
     }

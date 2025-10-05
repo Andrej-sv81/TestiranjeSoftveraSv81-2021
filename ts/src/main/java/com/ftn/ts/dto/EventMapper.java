@@ -51,16 +51,18 @@ public class EventMapper {
     }
 
     public static EventAgendaItem toAgendaEntity(AgendaItemDTO dto, Event event) {
-        if (dto == null) return null;
-
-        EventAgendaItem item = new EventAgendaItem();
-        item.setTitle(dto.getTitle());
-        item.setDescription(dto.getDescription());
-        item.setStartTime(LocalDateTime.parse(dto.getStartTime()));
-        item.setEndTime(LocalDateTime.parse(dto.getEndTime()));
-        item.setLocation(dto.getLocation());
-        item.setEvent(event);
-        return item;
+        try {
+            EventAgendaItem item = new EventAgendaItem();
+            item.setTitle(dto.getTitle());
+            item.setDescription(dto.getDescription());
+            item.setStartTime(LocalDateTime.parse(dto.getStartTime()));
+            item.setEndTime(LocalDateTime.parse(dto.getEndTime()));
+            item.setLocation(dto.getLocation());
+            item.setEvent(event);
+            return item;
+        } catch (Exception ex){
+            return null;
+        }
     }
 }
 

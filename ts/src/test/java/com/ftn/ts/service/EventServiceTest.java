@@ -194,4 +194,120 @@ class EventServiceTest {
     }
 
 
+    //dodavanje agende dogadjaju
+    @Test
+    void Adding_agenda_item_returns_the_item_when_valid_data_is_provided() {
+
+        when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+        when(agendaRepository.save(any(EventAgendaItem.class))).thenReturn(agendaItem);
+
+        try (MockedStatic<EventMapper> eventMapperMock = mockStatic(EventMapper.class)) {
+            eventMapperMock.when(() -> EventMapper.toAgendaEntity(agendaItemDTO, event))
+                    .thenReturn(agendaItem);
+
+            EventAgendaItem result = eventService.addAgendaItem(1L, agendaItemDTO);
+
+            assertNotNull(result);
+            assertEquals(agendaItem.getId(), result.getId());
+            assertEquals(agendaItem.getTitle(), result.getTitle());
+            assertEquals(agendaItem.getDescription(), result.getDescription());
+            assertEquals(agendaItem.getEvent(), result.getEvent());
+
+            verify(eventRepository).findById(1L);
+            verify(agendaRepository).save(any(EventAgendaItem.class));
+            eventMapperMock.verify(() -> EventMapper.toAgendaEntity(agendaItemDTO, event));
+        }
+    }
+
+    @Test
+    void Adding_agenda_item_throws_exception_when_event_is_not_found() {
+
+        when(eventRepository.findById(1L)).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> eventService.addAgendaItem(1L, agendaItemDTO));
+        assertEquals("Event not found", exception.getMessage());
+
+        verify(eventRepository).findById(1L);
+        verify(agendaRepository, never()).save(any());
+    }
+
+    @Test
+    void Adding_agenda_item_throws_exception_when_eventId_is_null() {
+
+        when(eventRepository.findById(null)).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> eventService.addAgendaItem(null, agendaItemDTO));
+        assertEquals("Event not found", exception.getMessage());
+
+        verify(eventRepository).findById(null);
+        verify(agendaRepository, never()).save(any());
+    }
+
+    @Test
+    void Adding_agenda_item_throws_exception_when_eventDTO_field_is_null() {
+
+        when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+        agendaItemDTO.setTitle(null); // Bilo koje polje kada bi bilo null (@Validate izostavljen) ^^
+
+        try (MockedStatic<EventMapper> eventMapperMock = mockStatic(EventMapper.class)) {
+            eventMapperMock.when(() -> EventMapper.toAgendaEntity(agendaItemDTO, event)).thenReturn(null);
+
+            RuntimeException exception = assertThrows(RuntimeException.class,
+                    () -> eventService.addAgendaItem(1L, agendaItemDTO));
+            assertEquals("Agenda item mapping failed", exception.getMessage());
+
+            verify(eventRepository).findById(1L);
+            eventMapperMock.verify(() -> EventMapper.toAgendaEntity(agendaItemDTO, event));
+            verify(agendaRepository, never()).save(any());
+        }
+    }
+
+    //dodvanje tipa dogadjaja - helper function
+    @Test
+    void Adding_event_type_creates_new_type() {
+        String name = "Workshop";
+        EventType type = new EventType();
+        type.setName(name);
+        when(eventTypeRepository.save(any(EventType.class))).thenReturn(type);
+
+        eventService.addEventType(name);
+
+        verify(eventTypeRepository).save(argThat(typeArg -> typeArg.getName().equals(name)));
+    }
+
+
+    //greske kod save() u repozitorijumu
+    @Test
+    void Event_creation_handles_repository_exceptions() {
+
+        when(userODRepository.findByEmail("andrej5@gmail.com")).thenReturn(Optional.of(user));
+        when(eventTypeRepository.findById(1L)).thenReturn(Optional.of(eventType));
+        when(eventRepository.save(any(Event.class))).thenThrow(new RuntimeException());
+        try (MockedStatic<EventMapper> eventMapperMock = mockStatic(EventMapper.class)) {
+            eventMapperMock.when(() -> EventMapper.toEntity(eventDTO, user, eventType)).thenReturn(event);
+
+            assertThrows(RuntimeException.class,
+            () -> eventService.createEvent(eventDTO, "andrej5@gmail.com"));
+
+            verify(eventRepository).save(any(Event.class));
+        }
+    }
+
+    @Test
+    void Adding_agenda_item_handles_repository_exceptions() {
+
+        when(eventRepository.findById(1L)).thenReturn(Optional.of(event));
+        when(agendaRepository.save(any(EventAgendaItem.class))).thenThrow(new RuntimeException());
+        try (MockedStatic<EventMapper> eventMapperMock = mockStatic(EventMapper.class)) {
+            eventMapperMock.when(() -> EventMapper.toAgendaEntity(agendaItemDTO, event)).thenReturn(agendaItem);
+
+            assertThrows(RuntimeException.class,
+            () -> eventService.addAgendaItem(1L, agendaItemDTO)
+            );
+
+            verify(agendaRepository).save(any(EventAgendaItem.class));
+        }
+    }
 }
