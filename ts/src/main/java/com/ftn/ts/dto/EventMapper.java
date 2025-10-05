@@ -21,18 +21,20 @@ public class EventMapper {
     }
 
     public static Event toEntity(EventDTO dto, UserOD organizer, EventType eventType) {
-        if (dto == null) return null;
-
-        Event e = new Event();
-        e.setName(dto.getName());
-        e.setDescription(dto.getDescription());
-        e.setMaxParticipants(dto.getMaxParticipants());
-        e.setPrivacyType(PrivacyType.valueOf(dto.getPrivacyType()));
-        e.setLocation(dto.getLocation());
-        e.setEventDate(LocalDateTime.parse(dto.getEventDate()));
-        e.setOrganizer(organizer);
-        e.setEventType(eventType);
-        return e;
+        try {
+            Event e = new Event();
+            e.setName(dto.getName());
+            e.setDescription(dto.getDescription());
+            e.setMaxParticipants(dto.getMaxParticipants());
+            e.setPrivacyType(PrivacyType.valueOf(dto.getPrivacyType()));
+            e.setLocation(dto.getLocation());
+            e.setEventDate(LocalDateTime.parse(dto.getEventDate()));
+            e.setOrganizer(organizer);
+            e.setEventType(eventType);
+            return e;
+        } catch (Exception ex){
+            return null;
+        }
     }
 
     // ---- Agenda mapiranje ----

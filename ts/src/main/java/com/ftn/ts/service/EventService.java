@@ -32,13 +32,14 @@ public class EventService {
         UserOD user = userODRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(email));
 
-        EventType type = null;
-        if (dto.getEventTypeId() != null) {
-            type = eventTypeRepository.findById(dto.getEventTypeId())
+        EventType type = eventTypeRepository.findById(dto.getEventTypeId())
                     .orElseThrow(() -> new RuntimeException("EventType not found"));
-        }
-
+        
         Event event = EventMapper.toEntity(dto, user, type);
+        if(event == null){
+            throw new RuntimeException("Event mapping failed");
+        }
+        
         Event saved = eventRepository.save(event);
         return saved;
     }
