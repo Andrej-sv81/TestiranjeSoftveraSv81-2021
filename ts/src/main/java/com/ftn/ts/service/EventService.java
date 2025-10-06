@@ -11,6 +11,7 @@ import com.ftn.ts.repository.EventAgendaRepository;
 import com.ftn.ts.repository.EventRepository;
 import com.ftn.ts.repository.EventTypeRepository;
 import com.ftn.ts.repository.UserODRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,7 +34,7 @@ public class EventService {
                 .orElseThrow(() -> new UsernameNotFoundException(email));
 
         EventType type = eventTypeRepository.findById(dto.getEventTypeId())
-                    .orElseThrow(() -> new RuntimeException("EventType not found"));
+                    .orElseThrow(() -> new EntityNotFoundException("EventType not found"));
         
         Event event = EventMapper.toEntity(dto, user, type);
         if(event == null){
@@ -46,7 +47,7 @@ public class EventService {
 
     public EventAgendaItem addAgendaItem(Long eventId, AgendaItemDTO dto) {
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new RuntimeException("Event not found"));
+                .orElseThrow(() -> new EntityNotFoundException ("Event not found"));
 
         EventAgendaItem item = EventMapper.toAgendaEntity(dto, event);
         if(item == null){

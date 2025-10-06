@@ -11,7 +11,7 @@ public class EventDTO {
     private String name;
 
     @NotBlank(message = "Description is required")
-    @Size(max = 2000, message = "Description cannot exceed 2000 characters")
+    @Size(max = 255, message = "Description cannot exceed 255 characters")
     private String description;
 
     @NotNull(message = "Max participants is required")

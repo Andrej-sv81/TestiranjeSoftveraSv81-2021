@@ -8,6 +8,7 @@ import com.ftn.ts.service.EventService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +23,10 @@ public class EventController {
     private EventService eventService;
 
     @PostMapping
-//    @PreAuthorize("ROLE_USER_OD")
     public ResponseEntity<Long> createEvent(@RequestBody @Valid EventDTO dto, Principal principal) {
+        if (principal == null) { // security config permit all error
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         Event created = eventService.createEvent(dto, principal.getName());
         return ResponseEntity.ok(created.getId());
     }

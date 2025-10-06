@@ -5,6 +5,9 @@ import com.ftn.ts.dto.EventDTO;
 import com.ftn.ts.dto.EventMapper;
 import com.ftn.ts.model.*;
 import com.ftn.ts.repository.*;
+
+import jakarta.persistence.EntityNotFoundException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -165,7 +168,7 @@ class EventServiceTest {
         when(userODRepository.findByEmail("andrej5@gmail.com")).thenReturn(Optional.of(user));
         when(eventTypeRepository.findById(1L)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class,
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
                 () -> eventService.createEvent(eventDTO, "andrej5@gmail.com"));
         assertEquals("EventType not found", exception.getMessage());
 
@@ -224,7 +227,7 @@ class EventServiceTest {
 
         when(eventRepository.findById(1L)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class,
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
                 () -> eventService.addAgendaItem(1L, agendaItemDTO));
         assertEquals("Event not found", exception.getMessage());
 
@@ -237,7 +240,7 @@ class EventServiceTest {
 
         when(eventRepository.findById(null)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class,
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
                 () -> eventService.addAgendaItem(null, agendaItemDTO));
         assertEquals("Event not found", exception.getMessage());
 

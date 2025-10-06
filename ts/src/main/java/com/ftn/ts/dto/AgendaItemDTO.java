@@ -13,7 +13,7 @@ public class AgendaItemDTO {
     private String title;
 
     @NotBlank(message = "Description is required")
-    @Size(max = 1000, message = "Description cannot exceed 1000 characters")
+    @Size(max = 255, message = "Description cannot exceed 255 characters")
     private String description;
 
     @NotBlank(message = "Start time is required")
