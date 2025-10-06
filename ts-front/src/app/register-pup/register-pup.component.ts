@@ -26,11 +26,11 @@ export class RegisterPUPComponent {
       name: ['', [Validators.required, Validators.maxLength(50)]],
       address: ['', [Validators.required, Validators.maxLength(100)]],
       phone: ['', [Validators.required, Validators.pattern('^[0-9\\-\\+]{6,15}$')]],
-      description: ['', [Validators.required, Validators.maxLength(512)]],
+      description: ['', [Validators.required, Validators.maxLength(255)]],
     });
   }
 
-  registerOD(){
+  registerPUP(){
     let user: UserPUP = {
       email: this.registerForm.controls['email'].getRawValue()!,
       password: this.registerForm.controls['password'].getRawValue()!,

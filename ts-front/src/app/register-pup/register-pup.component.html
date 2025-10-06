@@ -3,7 +3,7 @@
         <h2>Register PUP</h2>
         <button style="margin-left: 10px;" (click)="click()">OD</button>
     </div>
-    <form [formGroup]="registerForm" (ngSubmit)="registerOD()">
+    <form [formGroup]="registerForm" (ngSubmit)="registerPUP()">
         <div class="title-div">
             <label for="email">Email: </label>
             <label class="error"
@@ -57,7 +57,6 @@
             </label>
         </div>
         <textarea id="description" type="text" formControlName="description"></textarea>
-
         <button type="submit" [disabled]="!registerForm.valid">Register</button>
     </form>
 </div>
